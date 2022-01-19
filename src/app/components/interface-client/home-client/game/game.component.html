@@ -1,0 +1,86 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8">
+                <h2 class="lead">New game</h2>
+                        <div class="col-md-8">
+                            <ng-select placeholder="Select game type" [(ngModel)]="game.gameType" name="gameType" id="gameType" >
+                                <ng-option *ngFor="let option of newGameOptions.availableGameTypes"  value="{{option.name}}">{{option.name}}</ng-option>
+                            </ng-select>
+                        </div>  
+    
+                        <div class="col-md-8">
+                            <ng-select placeholder="Select piece" [(ngModel)]="game.firstPlayerPieceCode" name="piece" id="piece">
+                                <ng-option *ngFor="let option of newGameOptions.availablePieces"  value="{{option.name}}">{{option.name}}</ng-option>
+                            </ng-select>
+                        </div>
+
+                        <div class="col-sm-offset-4 col-sm-6" style="padding-bottom:50px">
+                            <button (click)="createGame()" class="btn btn-md btn-primary">
+                                <span class="glyphicon glyphicon-plus"></span> New Game
+                            </button>
+                        </div>  
+            </div>
+
+            <div class="col-md-6">
+                <h2 class="lead">Join existing game</h2>
+                <table class="table table-hover table-striped table-condensed" ng-show="gamesToJoin.length">
+                        <thead>
+                            <td>Started player</td>
+                            <td>Game status</td>
+                            <td>Created</td>
+                            <td></td>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let game of gamesToJoin">
+                                <td>{{game.firstPlayer.username}}</td>
+                                <td>{{game.gameStatus}}</td>
+                                <td>{{game.created | date:'MM-dd-yyyy HH:mm:ss'}}</td>
+                                <td>
+                                    <button type="submit" class="btn btn-sm" (click)="joinGame(game.id)">
+                                    <span class="glyphicon glyphicon-plus"></span> Join </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                </table>
+                <div *ngIf="!gamesToJoin.length">
+                    No games to join.
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <h2 class="lead">My Games</h2>
+                <table class="table table-hover table-striped table-condensed" ng-show="playerGames.length">
+                        <thead>
+                            <td>Started player</td>
+                            <td>Second player</td>
+                            <td>Game status</td>
+                            <td>Created</td>
+                            <td></td>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let game of playerGames">
+                                <td>{{game.firstPlayer.username}}</td>
+                                <td>
+                                   <span ng-if="!game.player.username">
+                                        COMPUTER
+                                    </span>
+                                    <span ng-if="game.player.username != ''">
+                                         {{game.secondPlayer.username}}
+                                    </span>
+                                    
+                                </td>
+                                <td>{{game.gameStatus}}</td>
+                                <td>{{game.created | date:'MM-dd-yyyy HH:mm:ss'}}</td>
+                                <td>
+                                    <button type="submit" class="btn btn-sm" (click)="loadGame(game.id)">
+                                    <span class="glyphicon glyphicon-plus"></span> Load </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>

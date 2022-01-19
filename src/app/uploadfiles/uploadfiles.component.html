@@ -1,0 +1,244 @@
+<!--<div>
+  <br>
+    <div class="container">
+      <div class="container">
+        <div fxLayout="column" fxLayoutGap="20px" fxLayout.gt-md="row"  fxLayoutAlign="space-around center" class="content">
+          <div class="blocks">
+            <div *ngFor="let progressInfo of progressInfos" class="mb-2">
+              <span>{{ progressInfo.fileName }}</span>
+              <div class="progress">
+                <div
+                  class="progress-bar progress-bar-info progress-bar-striped" 
+                  role="progressbar"
+                  attr.aria-valuenow="{{ progressInfo.value }}"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  [ngStyle]="{ width: progressInfo.value + '%' }"
+                >
+                  {{ progressInfo.value }}%
+                </div>
+              </div>
+            </div>
+            <label class="btn btn-default">
+              <input type="file" multiple (change)="selectFiles($event)" />
+            </label>
+            
+            <button
+              class="btn btn-success"
+              [disabled]="!selectedFiles"
+              (click)="uploadFiles()"
+            >
+              Upload
+            </button>
+            <div class="alert alert-light" role="alert">{{ message }}</div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="example-container mat-elevation-z8">
+        <div fxLayout="row" fxLayoutAlign="center center" class="content">
+          <mat-card class="card" >
+            <mat-card-title fxLayout.gt-xs="row" fxLayout.xs="column">
+              <h1>Recent Files</h1>
+            </mat-card-title>
+            <mat-card-content>
+              <div class="example-container mat-elevation-z8">
+              <mat-table [dataSource]="dbFiles">
+                <ng-container matColumnDef="fileName">
+                  <th mat-header-cell *matHeaderCellDef> fileName </th>
+                  <td mat-cell *matCellDef="let element"> {{element.fileName}} </td>
+                </ng-container>
+                <ng-container matColumnDef="fileType">
+                  <th mat-header-cell *matHeaderCellDef> fileType </th>
+                  <td mat-cell *matCellDef="let element"> {{element.fileType}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="delete">
+                  <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                  <mat-cell *matCellDef="let element">
+                    <input type="hidden" value={{element.id}} #id>
+                    <button mat-button (click)="frame.show()"> 
+                      <mat-icon class="icon">delete</mat-icon>
+                    </button>
+
+                    <div mdbModal #frame="mdbModal" class="modal fade top" id="frameModalTop" tabindex="-1" role="dialog"
+                         aria-labelledby="myModalLabel" aria-hidden="true">
+                         <div class="modal-dialog modal-sm modal-notify modal-danger" role="document">
+                          <div class="modal-content text-center">
+                            <div class="modal-header d-flex justify-content-center">
+                              <p class="heading">Are you sure?</p>
+                            </div>
+                            <div class="modal-body">
+                              <mdb-icon fas icon="times" size="4x" class="animated rotateIn"></mdb-icon>
+                            </div>
+                            <div class="modal-footer justify-content-center">
+                              <button mdbBtn color="danger" outline="true" class="waves-effect"
+                                 mdbWavesEffect (click)="delFile(id)">Yes</button>
+                              <a type="button" mdbBtn color="danger" class="waves-effect" mdbWavesEffect data-dismiss="modal" (click)="frame.hide()">No</a>
+                            </div>
+                          </div>
+                         </div>
+                    </div>
+
+                  </mat-cell>
+                </ng-container>
+               
+                <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+              </mat-table>
+            </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+</div>-->
+  
+<div class="main-content">
+  <div class="container-fluid">
+      <div class="row">
+          <div class="col-md-8">
+ 
+            
+              <ng-select placeholder="Select Thematic" (change)="onChangeThematics($event)">
+                <ng-option *ngFor="let thematic of thematics" [(value)]="thematic.id"  >
+                  {{thematic.name}}
+                </ng-option>
+              </ng-select>
+
+              <ng-select placeholder="Select Sub_Thematic" [(ngModel)]="selectedthematic" (change)="onChangeThematics2($event)">
+                <ng-option *ngFor="let subThematic of subThematics" [(value)]="subThematic.id" >
+                  {{subThematic.name}}
+                </ng-option>
+              </ng-select>
+              
+
+            <div class="card">
+
+              <div class="card-header card-header-danger">
+                <h4 class="card-title">Upload files</h4>
+                <p class="card-category"></p>
+              </div>
+
+              <div class="card-body">
+
+                  <div *ngFor="let progressInfo of progressInfos" class="mb-2">
+                    <span>{{ progressInfo.fileName }}</span>
+                    <div class="progress">
+                      <div
+                          class="progress-bar progress-bar-info progress-bar-striped" 
+                          role="progressbar"
+                          attr.aria-valuenow="{{ progressInfo.value }}"
+                          aria-valuemin="0"
+                          aria-valuemax="100"
+                           [ngStyle]="{ width: progressInfo.value + '%' }">
+                        {{ progressInfo.value }}%
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <label class="btn btn-default">
+                    <input type="file" multiple (change)="selectFiles($event)" />
+                    Select Files
+                  </label>
+                 <button class="btn btn-success" [disabled]="!selectedFiles" (click)="uploadFiles()">
+                    Upload
+                </button>
+                  
+                 
+               
+                <div class="alert alert-light" role="alert">
+                  {{ message }} 
+                </div>
+              </div>
+            
+            </div>
+          </div>
+
+         
+          <br>
+           
+          <div class="container">
+            <ng-select placeholder="Search files" (change)="onChangeThematics1($event)">
+              <ng-option *ngFor="let subthematic of subThematics" [(value)]="subthematic.id"  >
+                {{subthematic.name}}
+              </ng-option>
+            </ng-select>
+            <div class="row">
+              <div class="col-md-3 mx-auto my-5" *ngFor="let dbFile of dbFiles">
+                <mdb-card>
+
+                  <mdb-card-body>
+                    <mdb-card-title>
+                      <h4>{{dbFile.fileName}}</h4>
+                    </mdb-card-title>
+          
+                    <mdb-card-text>
+                      {{dbFile.fileType}}
+                    </mdb-card-text>
+          
+                  </mdb-card-body>
+                </mdb-card>
+              </div>
+            </div>
+          </div>
+         <!-- <div class="example-container mat-elevation-z8">
+            <div fxLayout="row" fxLayoutAlign="center center" class="content">
+              <mat-card class="card" >
+                <mat-card-title fxLayout.gt-xs="row" fxLayout.xs="column">
+                  <h1>Recent Files</h1>
+                </mat-card-title>
+                <mat-card-content>
+                  <div class="example-container mat-elevation-z8">
+                  <mat-table [dataSource]="dbFiles">
+                    <ng-container matColumnDef="fileName">
+                      <th mat-header-cell *matHeaderCellDef> fileName </th>
+                      <td mat-cell *matCellDef="let element"> {{element.fileName}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="fileType">
+                      <th mat-header-cell *matHeaderCellDef> fileType </th>
+                      <td mat-cell *matCellDef="let element"> {{element.fileType}} </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="delete">
+                      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                      <mat-cell *matCellDef="let element">
+                        <input type="hidden" value={{element.id}} #id>
+                        <button mat-button (click)="frame.show()"> 
+                          <mat-icon class="icon">delete</mat-icon>
+                        </button>
+    
+                        <div mdbModal #frame="mdbModal" class="modal fade top" id="frameModalTop" tabindex="-1" role="dialog"
+                             aria-labelledby="myModalLabel" aria-hidden="true">
+                             <div class="modal-dialog modal-sm modal-notify modal-danger" role="document">
+                              <div class="modal-content text-center">
+                                <div class="modal-header d-flex justify-content-center">
+                                  <p class="heading">Are you sure?</p>
+                                </div>
+                                <div class="modal-body">
+                                  <mdb-icon fas icon="times" size="4x" class="animated rotateIn"></mdb-icon>
+                                </div>
+                                <div class="modal-footer justify-content-center">
+                                  <button mdbBtn color="danger" outline="true" class="waves-effect"
+                                     mdbWavesEffect (click)="delFile(id)">Yes</button>
+                                  <a type="button" mdbBtn color="danger" class="waves-effect" mdbWavesEffect data-dismiss="modal" (click)="frame.hide()">No</a>
+                                </div>
+                              </div>
+                             </div>
+                        </div>
+    
+                      </mat-cell>
+                    </ng-container>
+                   
+                    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                    <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+                  </mat-table>
+                </div>
+                </mat-card-content>
+              </mat-card>
+            </div>
+          </div>
+          -->
+      </div>
+  </div>
+</div>

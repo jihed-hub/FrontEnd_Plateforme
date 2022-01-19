@@ -1,0 +1,81 @@
+<p-toast></p-toast>
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header card-header-danger card-header-icon">
+                        <div class="card-icon"><i class="material-icons">assignment_ind</i></div>
+                        <h4 class="card-title">Demandes Clients&nbsp;({{userclient ? userclient.length : 0 }})</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <p-table  [value]="userclient"    [scrollable]="true" scrollHeight="500px" [rowHover]="true" [loading]="loading" >
+                                <ng-template pTemplate="header" >
+                                    <tr> 
+                                        <th>Nom & Prenom</th>
+                                        <th class="text-right">Actions</th>                                 
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-clt >
+                                    <tr >
+                                        <td>
+                                            <img [alt]="clt.firstNameclt" *ngIf="clt.photoclt !== null;else contenu_pas_bon" src="http://localhost:8003/api/test/apii/image/logo/{{clt.photoclt}}" width="50" class="rounded-circle" style="vertical-align: middle" />
+                                            <ng-template #contenu_pas_bon> <img src="assets/images/avatars/avat.jpg" alt="" width="50" class="rounded-circle" style="vertical-align: middle"></ng-template>
+                                            &nbsp;
+                                            <span class="image-text">{{clt.firstNameclt}}&nbsp;
+                                              {{clt.lastNameclt}}</span>
+                                        </td>
+                                        <td class="td-actions text-right">
+                                            <button pButton pRipple icon="pi pi-cog" class="p-button-rounded p-button-info" (click)="profilclient(clt)"   pTooltip="outils" ></button>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="summary">
+                                    <div class="p-d-flex p-ai-center p-jc-between">
+                                        Au total, il y a
+                                        {{userclient ? userclient.length : 0 }} demandes clients.
+                                    </div>
+                                </ng-template>
+                                <ng-template pTemplate="emptymessage">
+                                    <tr>
+                                        <td colspan="8" class="center">Aucune demande récente</td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<p-dialog [(visible)]="clientDialog" [style]="{width: '450px'}" header="Client Details" [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <img [src]="'http://localhost:8003/api/test/apii/image/logo/' + cltt.photoclt" [alt]="cltt.photoclt" class="center" height="150px" width="100px">
+     <br>
+        <div class="p-field">
+          <label for="name">Nom & Prenom&nbsp;&nbsp;</label>
+          {{cltt.firstNameclt}} {{cltt.lastNameclt}}
+          </div>
+          <div class="p-field">
+            <label for="name">Numero telephone&nbsp;&nbsp;</label>
+              +216{{cltt.telclt}}
+            </div>
+            <div class="p-field">
+              <label for="name">Email&nbsp;&nbsp;</label>
+                {{cltt.emailclt}}
+              </div>         
+                <div class="p-field">
+                  <label for="name">Adresse&nbsp;&nbsp;</label>
+                    {{cltt.adresseclt}}
+                  </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+      <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hidecltDialog()"></button>
+      <button pButton pRipple label="Approuver" icon="pi pi-check" class="p-button-text" (click)="activateclient(cltt.id)" ></button>
+  </ng-template>
+  
+  </p-dialog>

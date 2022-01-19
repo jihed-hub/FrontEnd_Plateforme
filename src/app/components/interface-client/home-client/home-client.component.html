@@ -1,0 +1,198 @@
+<style>
+ .flex-container {
+    display: flex;
+}
+
+.flex-child {
+    flex: 1;
+}  
+
+.flex-child {
+    margin-right: 20px;
+} 
+.h1{
+    font-size: 40px;
+    font-weight: bolder;
+    text-align: center;
+    margin-top: 30px;
+    color: black;
+}
+hr.rounded {
+  border-top: 8px solid #bbb;
+  border-radius: 5px;
+  margin-right: 100px;
+  margin-left: 100px;
+
+} 
+
+</style>
+<div class="block-space block-space--layout--divider-xs"></div>
+<div class="block block-slideshow">
+    <div class="container">
+        <div class="block-slideshow__carousel">
+            <div class="owl-carousel owl-loaded owl-drag">
+                <div class="owl-stage-outer">
+                    <div class="owl-stage" style="transform: translate3d(-4440px, 0px, 0px); transition: all 0.25s ease 0s; width: 7770px;">
+                        <div class="owl-item cloned" style="width: 1110px;">
+                            <a class="block-slideshow__item" routerLink="/Plateforme-Educative/client/store">
+                                <span
+                                class="block-slideshow__item-image block-slideshow__item-image--desktop"
+                                style="background-image: url('assets/images/slides/books_759.jpg')">
+                                </span>
+                                <span
+                                class="block-slideshow__item-image block-slideshow__item-image--mobile"
+                                style="background-image: url('assets/images/slides/slide-1-mobile.jpg')">
+                                </span>
+                                <span
+                                class="block-slideshow__item-offer">
+                                Book Store
+                                </span>
+                                <span 
+                                class="block-slideshow__item-title">
+                                an efficient <br> personalized <br> shopping experience
+                                </span>
+                                <span
+                                class="block-slideshow__item-button" >
+                                Explore
+                                </span>
+                            </a>
+                        </div>
+                        <div class="owl-item cloned" style="width: 1110px;">
+                            <a class="block-slideshow__item" routerLink="/Plateforme-Educative/client/store">
+                                <span
+                                class="block-slideshow__item-image block-slideshow__item-image--desktop"
+                                style="background-image: url('/assets/images/slides/how-to-transfer-files-from-pc-to-pc-hero1551645305603.jpg')">
+                                </span>
+                                <span
+                                class="block-slideshow__item-image block-slideshow__item-image--mobile"
+                                style="background-image: url('/assets/images/slides/how-to-transfer-files-from-pc-to-pc-hero1551645305603.jpg')">
+                                </span>
+                                <span
+                                class="block-slideshow__item-offer">
+                                Files
+                                </span>
+                                <span 
+                                class="block-slideshow__item-title">
+                                Hit Explore To <br> See Our FILES
+                                </span>
+                                <span class="block-slideshow__item-details">
+                                You Can Download Files <br> To Your Desktop <br> FOR FREE
+                                </span>
+                                <span
+                                class="block-slideshow__item-button" >
+                                Explore
+                                </span>
+                            </a>
+                        </div>
+                        <div class="owl-item active" style="width: 1110px;">
+                            <a class="block-slideshow__item" routerLink="/Plateforme-Educative/client/store">
+                                <span
+                                class="block-slideshow__item-image block-slideshow__item-image--desktop"
+                                style="background-image: url('assets/images/slides/1713842587.jpg')">
+                                </span>
+                                <span
+                                class="block-slideshow__item-image block-slideshow__item-image--mobile"
+                                style="background-image: url('assets/images/slides/1713842587.jpg')">
+                                </span>
+                                <span
+                                class="block-slideshow__item-offer">
+                                Games
+                                </span>
+                                <span 
+                                class="block-slideshow__item-title">
+                                Math Games <br> Puzzels <br> & a Lot More
+                                </span>
+                                <span
+                                class="block-slideshow__item-button" >
+                                Explore
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<h1 class="h1">Files</h1>
+<hr class="rounded">
+<div class="row" >
+    <div class="flex-container" style="margin-left: 150px;">
+        <div class="flex-child magenta" *ngFor="let dbFile of dbFiles | slice:0:3">
+                <mdb-card>
+                    <mdb-card-body>
+                      <mdb-card-title>
+                        <h4>{{dbFile.fileName}}</h4>
+                      </mdb-card-title>
+                      <mdb-card-text> 
+                        {{dbFile.fileType}}
+                      </mdb-card-text>
+                    </mdb-card-body> 
+
+                    <a mdbBtn color="primary" mdbWavesEffect (click)="downloadFile(dbFile)">Download</a>
+                </mdb-card>
+        </div>
+        <div class="flex-child green" style="margin-left: 30px; margin-top: 60px;">
+            <button type="button" class="btn btn-default" (click)="goToFilesFromHome()">
+                view all
+                <span class="material-icons">
+                     double_arrow
+                </span>
+            </button>    
+        </div>
+    </div>
+</div>
+<h1 class="h1">Books</h1>
+<hr class="rounded">
+<div class="row" >
+    <div class="flex-container" style="margin-left: 150px;">
+        <div class="flex-child magenta" *ngFor="let product of products | slice:0:5">
+            <app-book [product]="product" (productAddToCart)="addToCart($event)">Loading...</app-book>
+        </div>
+        <div class="flex-child green" style="margin-left: 30px; margin-top: 180px;">
+            <button type="button" class="btn btn-default" (click)="goToStoreFromHome()">
+                view all
+                <span class="material-icons">
+                     double_arrow
+                </span>
+            </button>    
+        </div>
+    </div>
+</div>
+
+<!--<div class="block-space block-space--layout--after-header"></div>
+<div class="block"> 
+    <div class="container container--max--xl">
+        <div class="row">
+            <div class="col-12 col-lg-3 d-flex flex-row">
+                <div class="account-nav flex-grow-1">
+                    <h4 class="account-nav__title">Navigation</h4>
+                    <ul class="account-nav__list">
+                        <li class="account-nav__item " (click)="goToStore()">
+                            <a routerLink="/Plateforme-Educative/client/home/store"  routerLinkActive=" account-nav__item--active">Store</a>
+                        </li>
+                        <li class="account-nav__item" (click)="goToFiles()"  >
+                            <a routerLink="/Plateforme-Educative/client/home/files" routerLinkActive=" account-nav__item--active" >Files</a>
+                        </li>
+                        <li class="account-nav__item" (click)="goToGames()"  >
+                            <a routerLink="/Plateforme-Educative/client/home/games" routerLinkActive=" account-nav__item--active" >Games</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-12 col-lg-9 mt-4 mt-lg-0">
+                <div *ngIf="position == 1">
+                    <app-store></app-store>
+                </div>
+                <div *ngIf="position == 2">
+                    <app-file></app-file>
+                </div>
+                <div *ngIf="position == 3">
+                    <app-game></app-game>
+                </div>
+            </div>
+        </div>
+        <div class="block-space block-space--layout--before-footer"></div>
+    </div>
+</div>-->
+
